@@ -3,6 +3,8 @@ const cors = require('cors')
 require('dotenv').config()
 const app = express()
 
+const initRoutes = require('./src/routers')
+
 
 app.use(cors({
     origin:process.env.URL_CLIENT
@@ -10,8 +12,9 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-app.use('/',(req,res)=>{res.send('app run')})
 
+
+initRoutes(app)
 
 const port = process.env.PORT || 8888
 
