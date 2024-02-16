@@ -16,7 +16,7 @@ const Sidebar = () => {
     if (errorMessage) return <div>Error: {errorMessage}</div>;
         
     return (  
-        <div className="flex flex-col border h-[88%]">
+        <div className="flex flex-col border h-[52%]">
             
             {categories?.map(el => (
                 <NavLink className='px-5 pt-[15px] pb-[14px] text-sm hover:text-main' key={el?._id} to={createSlug(el?.title)}>{el?.title}</NavLink>
