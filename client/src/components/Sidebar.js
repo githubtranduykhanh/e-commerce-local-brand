@@ -7,7 +7,6 @@ import { getCategories } from "../redux/features/app/appActions";
 const Sidebar = () => {
     const dispatch = useDispatch()
     const { categories,isLoading,errorMessage } = useSelector(state => state.app)
-    console.log(categories)
     useEffect(() => {
         dispatch(getCategories())
     },[dispatch])

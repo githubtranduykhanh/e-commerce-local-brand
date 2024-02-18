@@ -5,7 +5,7 @@ import {SelecOption} from '../components'
 import icons from '../ultils/icons'
 import { useState } from 'react'
 const {IoMenu,FaHeart,FaEye} = icons
-const Cart = ({productData,isNew,pid}) => {
+const Cart = ({productData,isNew,pid,h}) => {
 
     const [isShowOption,setIsShowOption] = useState(false)
     return (  
@@ -20,7 +20,7 @@ const Cart = ({productData,isNew,pid}) => {
                     setIsShowOption(false)
                 }}
             >
-                <div className='w-full relative'>
+                <div className={h ? `w-full relative h-[${h}px]` : 'w-full relative'}>
                     {isShowOption && <div className='absolute bottom-[-10px] left-0 right-0 flex justify-center gap-2 animate-slide-top'>
                         <SelecOption icon={<FaHeart/>}/>
                         <SelecOption icon={<IoMenu/>}/>
@@ -28,7 +28,7 @@ const Cart = ({productData,isNew,pid}) => {
                         </div>
                     }
                     
-                    <img src={productData?.thumb || 'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png'} alt={productData?.title} className="w-[274px] h-[274px] object-cover"/>
+                    <img src={productData?.thumb || 'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png'} alt={productData?.title} className="w-[274px] h-[274px] m-auto object-cover"/>
                     
                     {isNew
                         ? <img src={label} alt='lable' className='absolute top-[-15px] left-[-38px] w-[100px] h-[35px] object-cover' />
