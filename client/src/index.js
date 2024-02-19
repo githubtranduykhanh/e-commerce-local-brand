@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import './index.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'

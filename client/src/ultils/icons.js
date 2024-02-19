@@ -7,6 +7,9 @@ import { FaStar } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
+import { FaTwitter,FaPinterest,FaGooglePlusG,FaLinkedinIn,FaFlickr   } from "react-icons/fa";
 const icons = {
     FaPhoneAlt,
     MdEmail,
@@ -16,7 +19,14 @@ const icons = {
     FaStar,
     IoMenu,
     FaHeart,
-    FaEye
+    FaEye,
+    FaMapMarkerAlt,
+    FaFacebookF,
+    FaTwitter,
+    FaPinterest,
+    FaGooglePlusG,
+    FaLinkedinIn,
+    FaFlickr 
 }
 
 export default icons

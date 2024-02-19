@@ -37,3 +37,13 @@ button.slick-prev::before{
     height: 80px;
     font-size: 30px;
 }
+
+.footer-input-email{
+    position: relative;
+}
+.footer-input-icon{
+    position: absolute;
+    right: 25px;
+    bottom: 0;
+    transform: translateY(-80%);
+}

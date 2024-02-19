@@ -4,13 +4,17 @@ import labelBlue from '../assets/label-blue.png'
 import {SelecOption} from '../components'
 import icons from '../ultils/icons'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import path from '../ultils/path'
 const {IoMenu,FaHeart,FaEye} = icons
+
 const Cart = ({productData,isNew,pid,h}) => {
 
     const [isShowOption,setIsShowOption] = useState(false)
     return (  
         <div className="w-full text-base px-[10px]">
-            <div className="w-full border p-[15px] flex flex-col items-center"
+            <Link className="w-full border p-[15px] flex flex-col items-center"
+                to={`/${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
                 onMouseEnter={e => {
                     e.stopPropagation()
                     setIsShowOption(true)
@@ -48,7 +52,7 @@ const Cart = ({productData,isNew,pid,h}) => {
                     <span className="line-clamp-1">{productData?.title}</span>
                     <span>{`${formatMoney(productData?.price)} VND`}</span>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }
