@@ -47,3 +47,171 @@ button.slick-prev::before{
     bottom: 0;
     transform: translateY(-80%);
 }
+
+.center-of-screen{
+    z-index: 1000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.modal-bg{
+    z-index: 900;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+
+/*Loading css*/
+.jelly-triangle {
+    --uib-size: 200px;
+    --uib-speed: 1.75s;
+    --uib-color: #ee3131;
+    position: relative;
+    height: var(--uib-size);
+    width: var(--uib-size);
+    filter: url('#uib-jelly-triangle-ooze');
+  }
+  
+  .jelly-triangle__dot,
+  .jelly-triangle::before,
+  .jelly-triangle::after {
+    content: '';
+    position: absolute;
+    width: 33%;
+    height: 33%;
+    background: var(--uib-color);
+    border-radius: 100%;
+  }
+  
+  .jelly-triangle__dot {
+    top: 6%;
+    left: 30%;
+    animation: grow var(--uib-speed) ease infinite;
+  }
+  
+  .jelly-triangle::before {
+    bottom: 6%;
+    right: 0;
+    animation: grow var(--uib-speed) ease calc(var(--uib-speed) * -0.666)
+  infinite;
+  }
+  
+  .jelly-triangle::after {
+    bottom: 6%;
+    left: 0;
+    animation: grow var(--uib-speed) ease calc(var(--uib-speed) * -0.333)
+  infinite;
+  }
+  
+  .jelly-triangle__traveler {
+    position: absolute;
+    top: 6%;
+    left: 30%;
+    width: 33%;
+    height: 33%;
+    background: var(--uib-color);
+    border-radius: 100%;
+    animation: triangulate var(--uib-speed) ease infinite;
+  }
+  
+  .jelly-maker {
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+  
+  @keyframes triangulate {
+    0%,
+  100% {
+      transform: none;
+    }
+  
+    33.333% {
+      transform: translate(120%, 175%);
+    }
+  
+    66.666% {
+      transform: translate(-95%, 175%);
+    }
+  }
+  
+  @keyframes grow {
+    0%,
+  100% {
+      transform: scale(1.5);
+    }
+  
+    20%,
+  70% {
+      transform: none;
+    }
+  }
+
+
+
+  /* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */ /* Location of the box */
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.3); /* Black w/ opacity */
+}
+
+
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #fefefe;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}

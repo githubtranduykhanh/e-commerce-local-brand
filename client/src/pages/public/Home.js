@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 const Home = () => {
     const {newProduct} = useSelector(state => state.products)
     const {categories} = useSelector(state => state.app)
-    console.log('categories',categories)
+    
+
     return (  
         <>
             <div className='w-main flex'>

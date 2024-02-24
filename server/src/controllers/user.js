@@ -2,10 +2,12 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const crypto = require('crypto')
+const uniqid = require('uniqid')
 require('dotenv').config()
 
 const {generateAccessToken,generateRefreshToken} = require('../middlewares/jwt')
 const sendMail = require('../ultils/sendMail')
+
 
 const register = asyncHandler(async (req, res) => {
     const { email, password, firstname, lastname } = req.body
@@ -28,6 +30,54 @@ const register = asyncHandler(async (req, res) => {
             mes: newUser ? 'Register is successfully. Please go login :))' : 'Something went wrong'
         })
     }
+})
+
+const registerEmail = asyncHandler(async (req, res) => {
+    const { email, password, firstname, lastname, mobile } = req.body
+    if (!email || !password || !lastname || !firstname || !mobile)
+        return res.status(400).json({
+            sucess: false,
+            mes: 'Missing inputs'
+        })
+    
+
+    const user = await User.findOne({ email })
+    
+    if (user) throw new Error('User has existed')
+    else {
+
+        const token = uniqid()
+        // Lưu refresh token vào cookie
+        res.cookie('dataRegister', {...req.body,token}, { httpOnly: true, maxAge: 15* 60 * 1000 })
+
+        const html = `Xin vui lòng click vào link dưới đây để hoàng tất quá trình đăng ký của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. <a href=${process.env.URL_SERVER}/api/user/finalregister/${token}>Click here</a>`
+
+        const rs = await sendMail(email,html,'Hoàng tất đăng ký DIGITAL WORLD')
+
+        return res.status(200).json({
+            sucess: true,
+            data:rs,
+            mes: 'Register Email is successfully.' 
+        })
+    }
+})
+
+
+const finalRegister = asyncHandler(async (req, res) => {
+    const cookies = req.cookies
+    const { token } = req.params
+    if(!cookies || !cookies.dataRegister || cookies?.dataRegister?.token !== token ){
+        res.clearCookie('dataRegister')
+        res.redirect(`${process.env.URL_CLIENT}/final-register/failedcookies`)
+    } 
+    
+    const {token:tokenCk,...data} = cookies.dataRegister
+    
+    const newUser = await User.create(data)
+    res.clearCookie('dataRegister')
+    if(newUser) res.redirect(`${process.env.URL_CLIENT}/final-register/success`)
+    else res.redirect(`${process.env.URL_CLIENT}/final-register/failed`)
+    
 })
 // Refresh token => Cấp mới access token
 // Access token => Xác thực người dùng, quân quyên người dùng
@@ -98,23 +148,27 @@ const logout = asyncHandler(async (req, res) => {
 })
 
 
+//Post
 const forgotPasswordEmail  = asyncHandler(async (req, res) => {
-    const {email} = req.query
+    const {email} = req.body
     if(!email) throw new Error('Missing email :((')
     const user = await User.findOne({ email })
     if (!user) throw new Error('User not found')
     const resetToken = user.createPasswordChangedToken()
     await user.save()
-    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. <a href=${process.env.URL_SERVER}/api/user/reset-password/${resetToken}>Click here</a>`
+    const html = `Xin vui lòng click vào link dưới đây để thay đổi mật khẩu của bạn.Link này sẽ hết hạn sau 15 phút kể từ bây giờ. <a href=${process.env.URL_CLIENT}/reset-password/${resetToken}>Click here</a>`
 
-    const rs = await sendMail(email,html)
+    const rs = await sendMail(email,html,"Forgot password")
+    const isEmail = rs?.response?.includes('OK')
     return res.status(200).json({
-        success:rs ? true : false,
-        rs
+        success:isEmail ? true : false,
+        mes:isEmail?'Please check your email':'There was an error sending email'
     })
 })
 
 
+
+//Put
 const resetPassword  = asyncHandler(async (req, res) => {
     const { password, token } = req.body
     if(!password || !token) throw new Error('Missing inputs :((')
@@ -230,5 +284,7 @@ module.exports = {
     updateUser,
     updateUserByAdmin,
     updateUserAddress,
-    updateUserCart
+    updateUserCart,
+    registerEmail,
+    finalRegister
 }

@@ -1,44 +1,103 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import path from "../../ultils/path";
 import logo from "../../assets/logo.png";
-import { Button, InputFiled } from "../../components";
-import { useCallback, useState } from "react";
-import { apiRegister,apiLogin } from "../../apis";
+import { Button, InputFiled, Loading, Modal } from "../../components";
+import { useCallback, useEffect, useState } from "react";
+import { apiRegister,apiLogin, apiForgotPassword } from "../../apis";
 import {toast } from 'react-toastify';
+import {register} from '../../redux/features/user/userSlice'
+
 
 const Login = () => {
+    const navigate = useNavigate()
+    const dispath = useDispatch()
+    const location = useLocation()
     const [isRegister,setIsRegister] = useState(false)
+    const [isForgotPassword,setIsForgotPassword] = useState(false)
+    const [isLoading,setIsLoading] = useState(false)
+    const [emailForgot,setEmailForgot] = useState({
+      emailforgotpassword:'',
+    })
     const [payload,setPayload] = useState({
         email:'',
         password:'',
         firstname:'',
         lastname:'',
-        mobile:''
+        mobile:'',
     })
+    const resetPayload = () => {
+        setPayload({
+          email:'',
+          password:'',
+          firstname:'',
+          lastname:'',
+          mobile:''
+      })
+      
+    }
+    const handleSubmitForotPassword = useCallback( async ()=>{
+        if(emailForgot && emailForgot?.emailforgotpassword === '') toast.error('Missing input !')
+        else{
+          setIsLoading(true)
+          const res = await apiForgotPassword({email:emailForgot?.emailforgotpassword})
+          if(res?.success) {
+            toast.success(res?.mes)
+            setIsForgotPassword(false)
+            setEmailForgot({emailforgotpassword:''})
+          }
+          else toast.error(res?.mes)
+        }
+        
+    },[emailForgot])
+    const handleCloseModal = useCallback(()=>{
+      setIsForgotPassword(false)
+    },[])
     const handleSubmit = useCallback( async () => {
         const {firstname,lastname,mobile,...data} = payload
         if(isRegister){
+            setIsLoading(true)
             const res = await apiRegister(payload)
-            res?.sucess  ?  toast.success("Success Notification !") : toast.error(res?.mes);
-            console.log(res)
+            if(res?.sucess) {
+              toast.success(res?.mes,{
+                position: "top-center"
+              })
+              resetPayload()
+            }else{
+              toast.error(res?.mes)
+            }
         }else{
+            setIsLoading(true)
             const res = await apiLogin(data)
-            res.sucess ?  toast.success("Success Notification !") : toast.error("Error Notification !");
-            console.log(res)
+            if(res?.sucess){
+              toast.success("Success Notification !")
+              resetPayload()
+              dispath(register({isLogin:true,accessToken:res?.accessToken,userData:res?.userData}))
+              navigate(`/${path.HOME}`)
+            }else toast.error(res?.mes)
         } 
-    },[payload,isRegister])
+    },[payload,isRegister,dispath,navigate])
     const handleChaneLoginRegister = () => {
-        setPayload({
-            email:'',
-            password:'',
-            firstname:'',
-            lastname:'',
-            mobile:''
-        })
+        resetPayload()
         setIsRegister(prev => !prev)
     }
-    
+    useEffect(()=>{
+      if(location  && location.state){
+        console.log('location',location)
+        if(location.state.status === 'success') toast.success("Register is success !")
+        if(location.state.status === 'failed') toast.error("Register is error !")
+        if(location.state.status === 'failedcookies') toast.error("Register is error failed cookies !")
+      }
+    },[location])
+    useEffect(() => {
+      let timeout = setTimeout(()=>{
+          setIsLoading(false)
+      },5000)
 
+      return () => {
+        clearTimeout(timeout)
+      }
+    },[isLoading])
     return (
     <div className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -129,9 +188,9 @@ const Login = () => {
                   </label>
                 </div>
               </div>
-              <Link className="text-sm font-medium text-main hover:underline dark:text-primary-500">
+              <button onClick={() => setIsForgotPassword(true)} className="text-sm font-medium text-main hover:underline dark:text-primary-500">
                 Forgot password?
-              </Link>
+              </button>
             </div>
             
             <Button handleOnClick={handleSubmit}>{isRegister ? 'Sign up' : 'Sign in' }</Button>
@@ -144,6 +203,33 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {isLoading && <Loading/>}
+      {isForgotPassword && <Modal 
+        onCloseModal={handleCloseModal} 
+        iconCloseColer={'black'}
+        className="w-[700px] h-[200px] rounded-[20px] flex justify-center items-center">
+        <div className="m-[50px] w-full">
+              <div>
+                <label
+                  htmlFor="forgotpassword"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Email forgot password
+                </label>
+                <div className="flex items-center gap-5">
+                  <div className="flex-1">
+                    <InputFiled type='email' value={emailForgot.emailforgotpassword} setValue={setEmailForgot} nameKey='emailforgotpassword' name='emailforgotpassword' />
+                  </div>
+                  
+
+                  
+                  <Button handleOnClick={handleSubmitForotPassword} styles='w-[200px] text-white bg-main hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-main dark:hover:bg-primary-700 dark:focus:ring-primary-800'>Submit</Button>
+                </div>
+                
+              </div>
+              
+        </div>
+        </Modal>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import {Route,Routes} from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify';
-import {Login,Home,Public,Services,DetaiProduct,Products,FAQ,Blogs} from './pages/public'
+import {Login,Home,Public,Services,DetaiProduct,Products,FAQ,Blogs,FinalRegister,ResetPassword} from './pages/public'
 import path from './ultils/path';
 
 function App() {
@@ -17,10 +17,12 @@ function App() {
           <Route path={path.FAQ} element={<FAQ/>}/>
         </Route>
         <Route path={path.LOGIN} element={<Login/>}/>
+        <Route path={path.FINAL_REGISTER} element={<FinalRegister/>}/>
+        <Route path={path.RESET_PASSWORD} element={<ResetPassword/>}/>
       </Routes>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

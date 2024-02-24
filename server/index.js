@@ -8,7 +8,8 @@ const initRoutes = require('./src/routers')
 
 
 app.use(cors({
-    origin:process.env.URL_CLIENT
+    origin:process.env.URL_CLIENT,
+    credentials:true //Lưu cookie trên trình duyệt cùng với cấu hình withCredentials:true axios
 }))
 app.use(cookieParser())
 app.use(express.json())
