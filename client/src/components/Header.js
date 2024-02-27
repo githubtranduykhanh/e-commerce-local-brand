@@ -1,9 +1,20 @@
 import logo from '../assets/logo.png'
 import icons from '../ultils/icons';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import path from '../ultils/path'
+import { useDispatch,useSelector } from 'react-redux';
+import { showModalProfile } from '../redux/features/app/appSlice';
 const { FaPhoneAlt,MdEmail,HiShoppingBag,FaUserCircle } = icons
 const Header = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const {isLogin} = useSelector(state => state.user)
+    const handleProfile = () => {
+        if(isLogin) dispatch(showModalProfile())
+        else {
+            navigate(`/${path.LOGIN}`)
+        }
+    }
     return (  
         <div className="w-main flex justify-between items-center h-[110px] py[35px]">
             <Link to={`/${path.HOME}`}>
@@ -31,10 +42,12 @@ const Header = () => {
                     <HiShoppingBag color='red' size={24}/>
                     <span>0 items(s)</span>
                 </div>
-                <div className='flex items-center justify-center px-4'>
+                <div 
+                    onClick={handleProfile}
+                    className='flex items-center justify-center px-4 cursor-pointer' >
                     <FaUserCircle color='red' size={24}/>
                 </div>
-                <div></div>
+                
             </div>
         </div>
     );

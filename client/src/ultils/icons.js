@@ -9,8 +9,9 @@ import { FaHeart } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter,FaPinterest,FaGooglePlusG,FaLinkedinIn,FaFlickr   } from "react-icons/fa";
+import { FaTwitter,FaPinterest,FaGooglePlusG,FaLinkedinIn,FaFlickr,FaTruck,FaGift,FaReply,FaTty} from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import { BsShieldShaded } from "react-icons/bs";
 const icons = {
     FaPhoneAlt,
     MdEmail,
@@ -28,7 +29,12 @@ const icons = {
     FaGooglePlusG,
     FaLinkedinIn,
     FaFlickr,
-    IoMdClose 
+    IoMdClose,
+    BsShieldShaded,
+    FaTruck,
+    FaGift,
+    FaReply,
+    FaTty
 }
 
 export default icons

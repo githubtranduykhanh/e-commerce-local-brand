@@ -12,10 +12,15 @@ export const userSlice = createSlice({
     errorMessage:''
   },
   reducers: {
-      register: (state, action) => {
+      login: (state, action) => {
         state.isLogin = action.payload.isLogin
         state.token = action.payload.accessToken
         state.current = action.payload.userData
+      },
+      logout: (state) => {
+        state.isLogin = false
+        state.token = null
+        state.current = null
       },
   },
   extraReducers: (builder) => {
@@ -35,9 +40,31 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = action.error.message;
     })
+
+    //Get Current
+
+    builder.addCase(actions.getCurrent.pending, (state, action) => {
+      state.isLoading = true;
+    })
+
+    builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.current = action.payload.rs
+    })
+
+    builder.addCase(actions.getCurrent.rejected, (state, action) => {
+      if(!action.payload?.success && action.payload?.mes === 'Invalid access token'){
+        console.log(action)
+        state.current = null
+        state.isLogin = false
+        state.token = null
+      }
+      state.isLoading = false;
+      state.errorMessage = action.error.message;
+    })
   }
 })
 
-export const { register } = userSlice.actions
+export const { login,logout } = userSlice.actions
 
 export default userSlice.reducer

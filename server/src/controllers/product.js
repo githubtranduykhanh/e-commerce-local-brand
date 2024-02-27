@@ -34,7 +34,8 @@ const getProducts = asyncHandler(async (req, res) => {
     const formateQueries = JSON.parse(queryString)
 
     if(queryObj?.title) formateQueries.title = {$regex : queryObj.title, $options: 'i'}
-
+    if(queryObj?.category) formateQueries.category = {$regex : queryObj.category, $options: 'i'}
+    //console.log({formateQueries})
     let queryCommand = Product.find(formateQueries)
 
     // 2) Sorting

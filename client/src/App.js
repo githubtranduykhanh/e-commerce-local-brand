@@ -19,6 +19,7 @@ function App() {
         <Route path={path.LOGIN} element={<Login/>}/>
         <Route path={path.FINAL_REGISTER} element={<FinalRegister/>}/>
         <Route path={path.RESET_PASSWORD} element={<ResetPassword/>}/>
+        <Route path='*' element={<div>Not Found</div>} />
       </Routes>
       <ToastContainer
         position="top-right"

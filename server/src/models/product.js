@@ -55,6 +55,12 @@ var productSchema = new mongoose.Schema({
             comment: { type: String }
         }
     ],
+    variants: [
+        {
+            label: { type: String },
+            variants: {type :Array}
+        }
+    ],
     totalRatings: {
         type: Number,
         default: 0

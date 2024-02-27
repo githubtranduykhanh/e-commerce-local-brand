@@ -6,7 +6,7 @@ import { Button, InputFiled, Loading, Modal } from "../../components";
 import { useCallback, useEffect, useState } from "react";
 import { apiRegister,apiLogin, apiForgotPassword } from "../../apis";
 import {toast } from 'react-toastify';
-import {register} from '../../redux/features/user/userSlice'
+import {login} from '../../redux/features/user/userSlice'
 
 
 const Login = () => {
@@ -72,7 +72,7 @@ const Login = () => {
             if(res?.sucess){
               toast.success("Success Notification !")
               resetPayload()
-              dispath(register({isLogin:true,accessToken:res?.accessToken,userData:res?.userData}))
+              dispath(login({isLogin:true,accessToken:res?.accessToken,userData:res?.userData}))
               navigate(`/${path.HOME}`)
             }else toast.error(res?.mes)
         } 

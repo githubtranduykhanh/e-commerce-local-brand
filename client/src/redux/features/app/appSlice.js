@@ -2,15 +2,31 @@ import { createSlice } from '@reduxjs/toolkit'
 import * as actions from '../app/appActions'
 
 
-export const counterSlice = createSlice({
+export const appSlice = createSlice({
   name: 'app',
   initialState : {
     categories: [],
     isLoading:false,
-    errorMessage:''
+    errorMessage:'',
+    isModalProfile:false,
+    isModalDetail:false,
+    detail:{}
   },
   reducers: {
-    
+      showModalProfile: (state) => {
+        state.isModalProfile = true
+      },
+      closeModalProfile: (state) => {
+        state.isModalProfile = false
+      },
+      showModalDetail: (state,action) => {
+        state.isModalDetail = true
+        state.detail = action.payload
+      },
+      closeModalDetail: (state) => {
+        state.isModalDetail = false
+        state.detail = {}
+      },
   },
   extraReducers: (builder) => {
 
@@ -30,5 +46,5 @@ export const counterSlice = createSlice({
     })
   }
 })
-
-export default counterSlice.reducer
+export const { showModalProfile, closeModalProfile, showModalDetail, closeModalDetail  } = appSlice.actions
+export default appSlice.reducer

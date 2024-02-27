@@ -1,11 +1,10 @@
-import {Sidebar,Banner,BestSeller,DealDaily,FeaturedProducts,CustomSlider,HotCollections} from '../../components'
+import {Sidebar,Banner,BestSeller,FeaturedProducts,CustomSlider,HotCollections} from '../../components'
 import { useSelector } from 'react-redux';
 
 const Home = () => {
     const {newProduct} = useSelector(state => state.products)
     const {categories} = useSelector(state => state.app)
     
-
     return (  
         <>
             <div className='w-main flex'>
@@ -36,6 +35,7 @@ const Home = () => {
                 
             </div>
             <div className='w-full h-[500px]'></div>
+            
         </>
     );
 }

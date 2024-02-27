@@ -12,3 +12,10 @@ export const postLogin = createAsyncThunk('user/login',async(data,{rejectWithVal
     if(!response.sucess) return rejectWithValue(response)
     return response
 })
+
+
+export const getCurrent = createAsyncThunk('user/getCurrent',async(data,{rejectWithValue}) => {
+    const response = await apis.apiGetCurrent()
+    if(!response.sucess) return rejectWithValue(response)
+    return response
+})

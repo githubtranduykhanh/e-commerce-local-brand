@@ -19,6 +19,7 @@ const fnProduct = async (product) => {
         images:product?.images,
         color:product?.variants?.find(el => el?.label === "Color")?.variants[0] || 'BLACK',
         thumb:product?.thumb,
+        variants:product?.variants,
         totalRatings: Math.round(Math.random() * 5)
     })
 }

@@ -4,17 +4,37 @@ import labelBlue from '../assets/label-blue.png'
 import {SelecOption} from '../components'
 import icons from '../ultils/icons'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 import path from '../ultils/path'
+import { useDispatch } from 'react-redux'
+import { showModalDetail } from '../redux/features/app/appSlice'
 const {IoMenu,FaHeart,FaEye} = icons
 
-const Cart = ({productData,isNew,pid,h}) => {
-
+const Cart = ({productData,isNew,h,normal}) => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [isShowOption,setIsShowOption] = useState(false)
+    const handleSelecOption = (e,type) => {
+        switch (type) {
+            case 'live':
+                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                break;
+            case 'detail':
+                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                break;
+            case 'modal':
+                dispatch(showModalDetail(productData))
+                break;
+            default:
+                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                break;
+        }
+    }
     return (  
         <div className="w-full text-base px-[10px]">
-            <Link className="w-full border p-[15px] flex flex-col items-center"
-                to={`/${path.DETAIL_PRODUCT}/${productData?._id}/${productData?.title}`}
+            <div className="w-full border p-[15px] flex flex-col items-center"
+                
                 onMouseEnter={e => {
                     e.stopPropagation()
                     setIsShowOption(true)
@@ -26,20 +46,20 @@ const Cart = ({productData,isNew,pid,h}) => {
             >
                 <div className={h ? `w-full relative h-[${h}px]` : 'w-full relative'}>
                     {isShowOption && <div className='absolute bottom-[-10px] left-0 right-0 flex justify-center gap-2 animate-slide-top'>
-                        <SelecOption icon={<FaHeart/>}/>
-                        <SelecOption icon={<IoMenu/>}/>
-                        <SelecOption icon={<FaEye/>}/>
+                        <SelecOption onClick={handleSelecOption} icon={<FaHeart/>} type='live'/>
+                        <SelecOption onClick={handleSelecOption} icon={<IoMenu/>} type='detail'/>
+                        <SelecOption onClick={handleSelecOption} icon={<FaEye/>} type='modal'/>
                         </div>
                     }
                     
                     <img src={productData?.thumb || 'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png'} alt={productData?.title} className="w-[274px] h-[274px] m-auto object-cover"/>
                     
-                    {isNew
+                    {normal ? <></> : isNew
                         ? <img src={label} alt='lable' className='absolute top-[-15px] left-[-38px] w-[100px] h-[35px] object-cover' />
                         : <img src={labelBlue} alt='labelBlue' className='absolute top-[-15px] left-[-46px] w-[155px] h-[55px] object-cover' />
                     }
                     
-                    {isNew
+                    {normal ? <></> : isNew
                         ? <span className='font-bold absolute top-[-15px] left-[-12px] text-white'>New</span>
                         : <span className='font-bold absolute top-[-8px] left-[-10px] text-white'>Trending</span>
                     }
@@ -52,7 +72,7 @@ const Cart = ({productData,isNew,pid,h}) => {
                     <span className="line-clamp-1">{productData?.title}</span>
                     <span>{`${formatMoney(productData?.price)} VND`}</span>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 }

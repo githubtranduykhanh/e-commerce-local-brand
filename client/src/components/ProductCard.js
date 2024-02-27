@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+
 import { renderStarFromNumber,formatMoney } from "../ultils/helpers";
 const ProductCard = ({product}) => {
     return (  
