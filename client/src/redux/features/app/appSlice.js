@@ -10,9 +10,19 @@ export const appSlice = createSlice({
     errorMessage:'',
     isModalProfile:false,
     isModalDetail:false,
-    detail:{}
+    detail:{},
+    isModalRedux:false,
+    modalReduxChildren:null
   },
   reducers: {
+      showModalRedux: (state,action) => {
+        state.isModalRedux = true
+        state.modalReduxChildren = action.payload.modalReduxChildren
+      },
+      closeModalRedux: (state) => {
+        state.isModalRedux = false
+        state.modalReduxChildren = null
+      },
       showModalProfile: (state) => {
         state.isModalProfile = true
       },
@@ -46,5 +56,5 @@ export const appSlice = createSlice({
     })
   }
 })
-export const { showModalProfile, closeModalProfile, showModalDetail, closeModalDetail  } = appSlice.actions
+export const { showModalRedux,closeModalRedux, showModalProfile, closeModalProfile, showModalDetail, closeModalDetail  } = appSlice.actions
 export default appSlice.reducer

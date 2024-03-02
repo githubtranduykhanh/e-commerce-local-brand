@@ -1,10 +1,12 @@
 import {Route,Routes} from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify';
-import {Login,Home,Public,Services,DetaiProduct,Products,FAQ,Blogs,FinalRegister,ResetPassword} from './pages/public'
+import {Login,Home,Public,Services,DetaiProduct,Products,FAQ,Blogs,FinalRegister,ResetPassword, CollectionsCategory, Collections} from './pages/public'
 import path from './ultils/path';
+import ModalRedux from './components/ModalRedux';
+import { useSelector } from 'react-redux';
 
 function App() {
-  
+  const {isModalRedux,modalReduxChildren} = useSelector(state => state.app)
   return (
     <div className='min-h-screen font-main'>
       <Routes>
@@ -12,7 +14,9 @@ function App() {
           <Route path={path.HOME} element={<Home/>}/>
           <Route path={path.BLOGS} element={<Blogs/>}/>
           <Route path={path.OUR_SERVICES} element={<Services/>}/>
-          <Route path={path.DETAIL_PRODUCT__PID__TITLE} element={<DetaiProduct/>}/>
+          <Route path={path.COLLECTIONS_DETAIL_PRODUCT__CATEGOGY__PID__TITLE} element={<DetaiProduct/>}/>
+          <Route path={path.COLLECTIONS__CATEGOGY} element={<CollectionsCategory/>}/>
+          <Route path={path.COLLECTIONS} element={<Collections/>}/>
           <Route path={path.PRODUCTS} element={<Products/>}/>
           <Route path={path.FAQ} element={<FAQ/>}/>
         </Route>
@@ -34,6 +38,7 @@ function App() {
         theme="light"
         transition={Bounce}
       />
+      {isModalRedux && <ModalRedux>{modalReduxChildren}</ModalRedux>}
     </div>
   );
 }

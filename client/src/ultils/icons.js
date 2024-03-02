@@ -9,7 +9,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter,FaPinterest,FaGooglePlusG,FaLinkedinIn,FaFlickr,FaTruck,FaGift,FaReply,FaTty} from "react-icons/fa";
+import { FaTwitter,FaPinterest,FaGooglePlusG,FaLinkedinIn,FaFlickr,FaTruck,FaGift,FaReply,FaTty,FaChevronDown,FaSortDown} from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { BsShieldShaded } from "react-icons/bs";
 const icons = {
@@ -34,7 +34,9 @@ const icons = {
     FaTruck,
     FaGift,
     FaReply,
-    FaTty
+    FaTty,
+    FaChevronDown,
+    FaSortDown
 }
 
 export default icons

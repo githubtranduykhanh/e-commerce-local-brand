@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import icons from "../ultils/icons";
 import { closeModalProfile } from "../redux/features/app/appSlice";
 import { logout } from "../redux/features/user/userSlice";
-import { useEffect } from "react";
+import { useEffect,memo } from "react";
 import { getCurrent } from "../redux/features/user/userActions";
 
 const {IoMdClose} = icons
@@ -45,4 +45,4 @@ const ModalProfile = () => {
     );
 }
  
-export default ModalProfile;
+export default memo(ModalProfile);

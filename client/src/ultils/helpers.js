@@ -36,3 +36,13 @@ export const capitalize = s => {
     }
     return string
 }
+
+export const arrNewColor = arr => {
+    let list = []
+    for(let item of arr){
+        if(item?.checked) list.push(item?.name?.toLowerCase())
+    }
+    if(list.length < 0) return []
+    return list.join('-')
+}
+

@@ -3,6 +3,7 @@ import { createSlug } from "../ultils/helpers";
 import { useSelector,useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCategories } from "../redux/features/app/appActions";
+import path from "../ultils/path";
 
 const Sidebar = () => {
     const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const Sidebar = () => {
         <div className="flex flex-col border h-[52%]">
             
             {categories?.map(el => (
-                <NavLink className='px-5 pt-[15px] pb-[14px] text-sm hover:text-main' key={el?._id} to={createSlug(el?.title)}>{el?.title}</NavLink>
+                <NavLink className='px-5 pt-[15px] pb-[14px] text-sm hover:text-main' key={el?._id} to={`/${path.COLLECTIONS}/${createSlug(el?.title)}`}>{el?.title}</NavLink>
             ))}
             
         </div>

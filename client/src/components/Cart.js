@@ -18,16 +18,16 @@ const Cart = ({productData,isNew,h,normal}) => {
     const handleSelecOption = (e,type) => {
         switch (type) {
             case 'live':
-                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                navigate(`/${path.COLLECTIONS}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
                 break;
             case 'detail':
-                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                navigate(`/${path.COLLECTIONS}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
                 break;
             case 'modal':
                 dispatch(showModalDetail(productData))
                 break;
             default:
-                navigate(`/${path.DETAIL_PRODUCT}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
+                navigate(`/${path.COLLECTIONS}/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
                 break;
         }
     }

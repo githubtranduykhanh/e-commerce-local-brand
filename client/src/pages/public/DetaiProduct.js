@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Breadcrumbs,CustomSlider,ProductExtraInfoItem, ProductInfomation } from "../../components";
+import { Breadcrumbs,CustomSlider,ProductExtraInfoItem, ProductInfomation,LoadingCustum } from "../../components";
 import { useEffect } from "react";
 import { apiGetProduct, apiGetProductByid } from "../../apis";
 import { useState } from "react";
@@ -17,6 +17,7 @@ const settings = {
 const DetaiProduct = () => {
     const {pid,title,category} = useParams()
     const [detail,setDetail] = useState(null)
+    const [isLoading,setIsLoading] = useState(null)
     const [relatedProducts,setRelatedProducts] = useState(null)
     const [imageDetaiProduct,setImageDetaiProduct] = useState('')
     const [quantityDetaiProduct,setQuantityDetaiProduct] = useState(1)
@@ -27,14 +28,12 @@ const DetaiProduct = () => {
             setImageDetaiProduct(res?.productData?.thumb)
             apiGetProductByCategory(res?.productData?.category)
         } 
-        
     }
-    const apiGetProductByCategory = async (category) => {
+    const apiGetProductByCategory = async (categoryNew) => {
         const res = await apiGetProduct({category})
         if(res?.success){
             setRelatedProducts(res?.productDatas)
         } 
-        
     }
     const handleImageDetaiProduct = (el) => {
         setImageDetaiProduct(el)
@@ -46,11 +45,14 @@ const DetaiProduct = () => {
         }
     }
     useEffect(()=>{
+        setIsLoading(true)
         apiGetDetai()
-    },[])
+    },[pid,title,category])
     if(!detail) return <div>Not Found</div>
+
     else if(detail?.title !== title) return <div>Can not {title}</div>
     else if(detail?.category?.toLowerCase() !== category) return <div>Can not {category}</div>
+    else if(isLoading) return (<LoadingCustum dateTimeout={700} isLoading={isLoading} setLoading={setIsLoading}/>) 
     return (<div>
             <h1 className="text-lg mb-[10px] font-semibold">{detail?.title}</h1>
             <Breadcrumbs category={detail?.category} title={detail?.title}/>
@@ -61,14 +63,14 @@ const DetaiProduct = () => {
                             smallImage: {
                                 alt: 'Wristwatch by Ted Baker London',
                                 isFluidWidth: true,
-                                src: imageDetaiProduct
+                                src: imageDetaiProduct,
                             },
                             largeImage: {
                                 src: imageDetaiProduct,
                                 width: 1000,
                                 height: 1000
                             }
-                        }}  />
+                        }}/>
                     </div>
                     
                     <Slider {...settings} className="w-[458px] h-[150px] image-detail-slider">
@@ -107,12 +109,13 @@ const DetaiProduct = () => {
                 </div>
             </div>
             <div className="mt-[30px] text-[#505050] leading-[20.3px] text-[14px]">
-                <ProductInfomation/>
+                <ProductInfomation productProps={detail}/>
             </div>   
             <h3 className="text-[20px] mb-[50px] font-semibold py-[15px] border-b-2 border-main">OTHER CUSTOMERS ALSO BUY:</h3>
             <div className="mb-[100px]">
                 <CustomSlider normal={true} products={relatedProducts} hCart={400}/>  
-            </div>         
+            </div>   
+                 
         </div> 
     );
 }

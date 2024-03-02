@@ -1,3 +1,4 @@
+import { memo } from "react";
 const ProductExtraInfoItem = ({title,sub,icon}) => {
     return ( <div className="flex items-center text-[#505050] p-[10px] mb-[10px]">
         <span className="w-[37px] h-[37px] rounded-full mr-[10px] flex items-center text-white bg-[#505050] justify-center">{icon}</span>
@@ -9,4 +10,4 @@ const ProductExtraInfoItem = ({title,sub,icon}) => {
     );
 }
  
-export default ProductExtraInfoItem;
+export default memo(ProductExtraInfoItem);

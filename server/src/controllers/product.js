@@ -32,11 +32,19 @@ const getProducts = asyncHandler(async (req, res) => {
     let queryString = JSON.stringify(queryObj)
     queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)    
     const formateQueries = JSON.parse(queryString)
-
+    let colorQueryObj = {}
     if(queryObj?.title) formateQueries.title = {$regex : queryObj.title, $options: 'i'}
     if(queryObj?.category) formateQueries.category = {$regex : queryObj.category, $options: 'i'}
-    //console.log({formateQueries})
-    let queryCommand = Product.find(formateQueries)
+    if(queryObj?.color){
+        delete formateQueries.color
+        const arrColor = queryObj?.color?.split('-') 
+        const colorQuery = arrColor?.map(el => ({color:{$regex : el, $options: 'i'}}))
+        colorQueryObj = {$or:colorQuery}
+    } 
+    const newformateQueries = {...colorQueryObj,...formateQueries}
+    console.log({queryObj})
+    console.log({newformateQueries})
+    let queryCommand = Product.find(newformateQueries)
 
     // 2) Sorting
     if (req.query.sort) {
@@ -59,7 +67,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
     queryCommand.exec(async (err,response) =>{
         if(err) throw new Error(err.message)
-        const counts = await Product.find(formateQueries).countDocuments()
+        const counts = await Product.find(newformateQueries).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,

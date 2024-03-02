@@ -3,14 +3,14 @@ import { memo } from "react";
 
 
 
-const LoadingCustum = ({isLoading,setLoading}) => {
+const LoadingCustum = ({isLoading,setLoading,dateTimeout}) => {
     
     useEffect(()=>{
         let timeout
         if(isLoading) {         
             timeout = setTimeout(() => { 
                 setLoading(false)
-            },5000)
+            },dateTimeout || 5000)
         }
         return () => {
             clearTimeout(timeout)

@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import icons from "../ultils/icons";
 import { useDispatch } from "react-redux";
 import { closeModalDetail } from "../redux/features/app/appSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { formatPrice } from "../ultils/helpers";
 const {IoMdClose} = icons
 const settings = {
@@ -79,4 +79,4 @@ const ModalDetail = () => {
     );
 }
  
-export default ModalDetail;
+export default memo(ModalDetail);
