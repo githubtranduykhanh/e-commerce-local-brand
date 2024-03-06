@@ -8,6 +8,8 @@ import { closeModalRedux, showModalRedux } from "../redux/features/app/appSlice"
 import VoteOption from "./VoteOption";
 import { apiPostRatings } from "../apis";
 import { toast } from "react-toastify";
+import {Comment} from '../components'
+
 
 let timeout
 const ProductInfomation = ({productProps}) => {
@@ -29,7 +31,7 @@ const ProductInfomation = ({productProps}) => {
             return false
         }
         else{
-            const res = await apiPostRatings({comment,star,pid})
+            const res = await apiPostRatings({comment,star,pid,updateAt:Date.now()})
             if(res?.success) {
                 dispatch(closeModalRedux())
                 setProduct(res?.ratings)
@@ -51,6 +53,7 @@ const ProductInfomation = ({productProps}) => {
             clearTimeout(timeout)
         }
     },[])
+    console.log(product)
     return ( <div>
         <div className="flex justify-start gap-2">
         {tabsProductInfomation.map(el=>(
@@ -94,6 +97,17 @@ const ProductInfomation = ({productProps}) => {
                         onClick={handleVoteModal}
                         className="m-auto button p-4 border rounded-[10px] w-[50%]"
                         >Vote now</button> 
+                </div>
+                <div className="flex flex-col gap-4 mt-4">
+                    {product?.ratings?.map((el,index)=>(
+                        <Comment 
+                            key={`Comment-ProductInfomation-${el?._id}`}
+                            comment={el?.comment}
+                            updateAt={el?.updateAt}
+                            star={el?.star}
+                            name={`${el?.postedBy?.firstname} ${el?.postedBy?.lastname}`}
+                        />
+                    ))}
                 </div>
             </div>}
             

@@ -16,7 +16,7 @@ function App() {
           <Route path={path.OUR_SERVICES} element={<Services/>}/>
           <Route path={path.COLLECTIONS_DETAIL_PRODUCT__CATEGOGY__PID__TITLE} element={<DetaiProduct/>}/>
           <Route path={path.COLLECTIONS__CATEGOGY} element={<CollectionsCategory/>}/>
-          <Route path={path.COLLECTIONS} element={<Collections/>}/>
+          <Route path={path.COLLECTIONS} element={<CollectionsCategory/>}/>
           <Route path={path.PRODUCTS} element={<Products/>}/>
           <Route path={path.FAQ} element={<FAQ/>}/>
         </Route>

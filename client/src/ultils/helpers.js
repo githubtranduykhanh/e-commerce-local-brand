@@ -13,6 +13,7 @@ export const randomNumberStar = index => {
 export const renderStarFromNumber = (number,size) => {
     if(!Number(number)) return '...'
     const stars = []
+    number =  Math.round(number)
     for(let i = 0 ; i<+number ; i++) stars.push(<FaStar key={`render-Star-FaStar-${randomNumberStar(i)}`} size={size || 16} color='orange'/>)
     for(let i = 5 ; i>+number ; i--) stars.push(<FaRegStar key={`render-Star-FaRegStar-${randomNumberStar(i)}`} size={size || 16} color='orange' />)
     return stars
@@ -44,5 +45,11 @@ export const arrNewColor = arr => {
     }
     if(list.length < 0) return []
     return list.join('-')
+}
+
+
+export const generateRange = (star,end) => {
+    const length = end+1-star
+    return Array.from({length},(value,index)=> star + index)
 }
 
