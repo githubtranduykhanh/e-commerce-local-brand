@@ -12,7 +12,7 @@ const usePagination = (totalProductCount,currentPage, siblingCount = 1) => {
         if(isShowLeft && !isShowRight){
             const rightStart = paginationCount - 4
             const rightRange = generateRange(rightStart,paginationCount)
-            return [1,'DOTS',...rightRange]
+            return [1,<HiOutlineDotsHorizontal/>,...rightRange]
         }
         if(!isShowLeft && isShowRight){
             const leftRenge = generateRange(1,5)

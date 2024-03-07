@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const uniqid = require('uniqid')
 require('dotenv').config()
 
+
 const {generateAccessToken,generateRefreshToken} = require('../middlewares/jwt')
 const sendMail = require('../ultils/sendMail')
 
@@ -41,7 +42,7 @@ const registerEmail = asyncHandler(async (req, res) => {
         })
     
 
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ $or:[{email},{mobile}]})
     
     if (user) throw new Error('User has existed')
     else {
@@ -104,7 +105,7 @@ const login = asyncHandler(async (req, res) => {
         return res.status(200).json({
             sucess: true,
             accessToken,
-            userData
+            userData:{...userData,role}
         })
     } else {
         throw new Error('Invalid credentials!')
@@ -113,7 +114,7 @@ const login = asyncHandler(async (req, res) => {
 
 const current = asyncHandler(async (req, res) => {
     const {_id} = req.user
-    const user = await User.findById(_id).select('-refreshToken -password -role')
+    const user = await User.findById(_id).select('-refreshToken -password')
     return res.status(user ? 200 : 400).json({
         sucess: user ? true : false,
         rs:user ? user : 'User not found'

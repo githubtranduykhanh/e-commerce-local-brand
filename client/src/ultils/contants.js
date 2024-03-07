@@ -1,6 +1,6 @@
 import path from "./path"
 import icons from '../ultils/icons'
-
+const {BsShieldShaded,FaTruck,FaGift,FaReply,FaTty,MdSpaceDashboard,MdGroup,FaProductHunt,RiBillLine} = icons
 export const navigation = [
     {
         id:1,
@@ -36,7 +36,7 @@ export const bestseller = [
 ]
 
 
-const {BsShieldShaded,FaTruck,FaGift,FaReply,FaTty} = icons
+
 export const productExtraInfoItem = [
     {
         id:0,
@@ -241,5 +241,46 @@ export const voteOptions = [
     {
         id:5,
         text:'Perfect'
+    },
+]
+
+
+export const adminSidebar = [
+    {
+        id:0,
+        type:'SINGLE',
+        text:'Dashboard',
+        path: `/${path.ADMIN}/${path.DASHBOARD}`,
+        icon: <MdSpaceDashboard/>
+    },
+    {
+        id:1,
+        type:'SINGLE',
+        text:'Manage User',
+        path: `/${path.ADMIN}/${path.MANAGE_USER}`,
+        icon: <MdGroup/>
+    },
+    {
+        id:2,
+        type:'PARENT',
+        text:'Manage Product',
+        icon: <FaProductHunt/>,
+        submenu:[
+            {
+                text:'Create product',
+                path:`/${path.ADMIN}/${path.CREATE_PRODUCTS}`
+            },
+            {
+                text:'Manage product',
+                path:`/${path.ADMIN}/${path.MANAGE_PRODUCT}`
+            }
+        ]
+    },
+    {
+        id:3,
+        type:'SINGLE',
+        text:'Manage Order',
+        path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+        icon: <RiBillLine/>
     },
 ]

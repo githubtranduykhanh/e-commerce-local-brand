@@ -16,11 +16,15 @@ const CollectionsCategory = () => {
   const { category } = useParams();
   const [products, setProducts] = useState(null);
   const [params, setParams] = useState({});
-  const [sort, setSort] = useState('');
   const [activeSearchItem, setActiveSearchItem] = useState(null);
   const fetchApiCollectionsCategory = async (querys) => {
     const res = await apiGetProduct(querys);
-    if (res?.success) setProducts(res?.productDatas);
+    if (res?.success) {
+      if(params?.page && res?.counts < (+params?.page - 1)  * 10){
+        setParams(prve => ({...prve,page:1}))
+      }
+      setProducts(res)
+    };
   };
   const handleActiveSearchItem = useCallback(
     (name) => {
@@ -33,10 +37,10 @@ const CollectionsCategory = () => {
   const handleOnChangeSelect = useCallback( async (e)=> {
     if(category){
       const res = await apiGetProduct({sort:e.target.value,category})
-      if(res?.success) setProducts(res?.productDatas);
+      if(res?.success) setProducts(res);
     }else{
       const res = await apiGetProduct({sort:e.target.value})
-      if(res?.success) setProducts(res?.productDatas);
+      if(res?.success) setProducts(res);
     }
   },[category])
 
@@ -50,6 +54,8 @@ const CollectionsCategory = () => {
           params.price = queryPrice;
         }
       }
+      //fetchApiCollectionsCategory()
+      console.log('params',params)
       fetchApiCollectionsCategory(category ? {...params,category} : params);
   }, [params, category]);
   console.log(products)
@@ -92,7 +98,7 @@ const CollectionsCategory = () => {
           columnClassName="my-masonry-grid_column"
         >
           {products &&
-            products?.map((el) => (
+            products?.productDatas?.map((el) => (
               <Cart
                 key={`CollectionsCategory-Cart-${el?._id}`}
                 normal={true}
@@ -102,8 +108,8 @@ const CollectionsCategory = () => {
             ))}
         </Masonry>
       </div>
-      <div className='mt-2 flex justify-end'>
-        <Pagination/>
+      <div className='mt-2 mb-2'>
+        <Pagination onClickItem={setParams} currentPage={params?.page} totalCount={products?.counts}/>
       </div>
     </div>
   );

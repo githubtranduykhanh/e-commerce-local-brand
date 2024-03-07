@@ -58,6 +58,26 @@ module.exports = {
               transform: 'rotate(360deg)'
           }
         },
+        'rotate-0-180':{
+          '0%' : {
+              '-webkit-transform': 'rotate(0)',
+              transform: 'rotate(0)'
+          },
+          '100%' : {
+              '-webkit-transform': 'rotate(180deg)',
+              transform: 'rotate(180deg)'
+          }
+        },
+        'rotate-180-360':{
+          '0%' : {
+              '-webkit-transform': 'rotate(180deg)',
+              transform: 'rotate(180deg)'
+          },
+          '100%' : {
+              '-webkit-transform': 'rotate(360deg)',
+              transform: 'rotate(360deg)'
+          }
+        },
         'opacity-show':{
           '0%' : {
               opacity: 0
@@ -69,12 +89,29 @@ module.exports = {
               opacity: 1
           }
         },
+        'scale-up-ver-top':{
+          '0%' : {
+            '-webkit-transform': 'scaleY(0.4)',
+            transform: 'scaleY(0.4)',
+            '-webkit-transform-origin': '100% 0%',
+            'transform-origin': '100% 0%',
+          },
+          '100%' : {
+            '-webkit-transform': 'scaleY(1)',
+            transform: 'scaleY(1)',
+            '-webkit-transform-origin': '100% 0%',
+            'transform-origin': '100% 0%',
+          }
+        },
       },
       animation:{
         'slide-top' : 'slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'slide-left' : 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
         'rotate-center' : 'rotate-center 0.5s ease-in-out both;',
-        'opacity-show' : 'opacity-show 0.7s ease-in-out both;'
+        'rotate-0-180' : 'rotate-0-180 0.5s ease-in-out both;',
+        'rotate-180-360' : 'rotate-180-360 0.5s ease-in-out both;',
+        'opacity-show' : 'opacity-show 0.7s ease-in-out both;',
+        'scale-up-ver-top' : 'scale-up-ver-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;'
       }
     },
     listStyleType: {

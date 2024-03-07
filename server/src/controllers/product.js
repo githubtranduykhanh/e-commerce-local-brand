@@ -31,6 +31,7 @@ const getProducts = asyncHandler(async (req, res) => {
     //BUILD QUERY
     // 1A) Filtering
     const queryObj = { ...req.query }
+    
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach(el => delete queryObj[el])
 
@@ -48,8 +49,8 @@ const getProducts = asyncHandler(async (req, res) => {
         colorQueryObj = {$or:colorQuery}
     } 
     const newformateQueries = {...colorQueryObj,...formateQueries}
-    console.log({queryObj})
-    console.log({newformateQueries})
+    
+    
     let queryCommand = Product.find(newformateQueries)
 
     // 2) Sorting

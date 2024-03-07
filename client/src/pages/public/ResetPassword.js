@@ -4,7 +4,7 @@ import {apiResetpassword} from '../../apis'
 import { toast } from "react-toastify";
 import path from "../../ultils/path";
 import logo from '../../assets/logo.png'
-import LoadingCustum from "../../components/LoadingCustum";
+import {LoadingCustum} from "../../components/";
 
 const ResetPassword = () => {
     const navigate = useNavigate()
