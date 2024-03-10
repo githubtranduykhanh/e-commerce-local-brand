@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 import {FaSortDown} from 'react-icons/fa'
 
-const activedStyle = 'px-4 py-2 flex items-center gap-2 bg-main  text-white  rounded-xl mb-2'
-const notActivedStyle = 'px-4 py-2 flex items-center gap-2 hover:bg-main hover:text-white rounded-xl mb-2'
+const activedStyle = 'px-4 py-2 flex items-center gap-2 bg-main  text-white  rounded-md mb-2'
+const notActivedStyle = 'px-4 py-2 flex items-center gap-2 hover:bg-main hover:text-white rounded-md mb-2'
 const AdminSidebar = () => {
   const [active,setActive] = useState([])
   const handelParent =(tabID)=>{
@@ -14,7 +14,7 @@ const AdminSidebar = () => {
     else setActive(prve => [...prve,tabID])
   }
   return (
-    <div className='py-4 h-full'>
+    <div className='py-4 h-full border-r'>
       <div className='flex flex-col items-center gap-2 '>
         <img src={logo} alt='AdminSidebar-logo' className='object-contain'/>
         <small>Admin Workspage</small>
@@ -31,7 +31,7 @@ const AdminSidebar = () => {
                   <span>{el.text}</span>
                 </NavLink>}
                 {el.type === 'PARENT' && <div onClick={()=>handelParent(el.id)} className='text-sm'>
-                    <div className='flex items-center justify-between px-4 py-2 gap-2 hover:bg-main hover:text-white rounded-xl mb-2'>
+                    <div className='flex items-center justify-between px-4 py-2 gap-2 hover:bg-main hover:text-white rounded-md mb-2'>
                       <div className='flex items-center gap-2'>
                         <span>{el.icon}</span>
                         <span>{el.text}</span>

@@ -16,12 +16,14 @@ export const userSlice = createSlice({
         state.isLogin = action.payload.isLogin
         state.token = action.payload.accessToken
         state.current = action.payload.userData
-        console.log('state.current',state.current)
       },
       logout: (state) => {
         state.isLogin = false
         state.token = null
         state.current = null
+      },
+      refreshToken: (state,action) => {
+        state.token = action.payload.token
       },
   },
   extraReducers: (builder) => {
@@ -50,7 +52,6 @@ export const userSlice = createSlice({
 
     builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log('current',action.payload.rs)
       state.current = action.payload.rs
     })
 
@@ -67,6 +68,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { login,logout } = userSlice.actions
+export const { login,logout,refreshToken } = userSlice.actions
 
 export default userSlice.reducer

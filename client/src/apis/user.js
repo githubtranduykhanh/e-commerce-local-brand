@@ -10,7 +10,8 @@ export const apiRegister = (data) => axios({
 export const apiLogin = (data) => axios({
     url:'/user/login',
     method:'post',
-    data
+    data,
+    withCredentials:true //Lưu cookie trên trình duyệt cùng với cấu hình credentials:true server
 })
 
 export const apiForgotPassword = (data) => axios({
@@ -26,8 +27,30 @@ export const apiResetpassword = (data) => axios({
     data
 })
 
+export const apiGetRefreshToken = () => axios({
+    url:'/user/refreshtoken',
+    method:'get',
+    withCredentials:true
+})
 
 export const apiGetCurrent = () => axios({
     url:'/user/current',
     method:'get',
+})
+
+export const apiGetUsers = (params) => axios({
+    url:'/user/',
+    method:'get',
+    params
+})
+
+export const apiUpdateUser = (data,uid) => axios({
+    url:'/user/'+ uid,
+    method:'put',
+    data
+})
+
+export const apiDeleteUser = (uid) => axios({
+    url:'/user/'+ uid,
+    method:'delete',
 })

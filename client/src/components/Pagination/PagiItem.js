@@ -5,9 +5,8 @@ import { memo } from 'react'
 const PagiItem = ({children,onClickItem,currentPage = 1}) => {
   
   const handlePagiItem = () => {
-    onClickItem(prve => ({...prve,page:children}))
+    onClickItem(prve => typeof prve === 'object' ?  ({...prve,page:children}) : children)
   }
-  console.log('PagiItem',currentPage)
   
   return (
     <button onClick={handlePagiItem} className={clsx('w-10 h-10 flex  justify-center ',

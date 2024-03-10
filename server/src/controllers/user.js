@@ -124,7 +124,7 @@ const current = asyncHandler(async (req, res) => {
 
 const refreshToken = asyncHandler(async (req, res) => {
     const cookies = req.cookies
-    console.log('>>>>>refreshToken: ',cookies)
+    console.log('>>>>>refreshToken: ',cookies?.refreshToken)
     if(!cookies || !cookies.refreshToken) throw new Error('No refresh token in cookie !')
     const refreshTokenData = jwt.verify(cookies.refreshToken, process.env.JWT_SECRET)
     const user = await User.findOne({_id:refreshTokenData._id,refreshToken:cookies.refreshToken})
@@ -188,11 +188,63 @@ const resetPassword  = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    const response = await User.find().select('-refreshToken -password -role')
-    return res.status(200).json({
-        success: response ? true : false,
-        users: response
+    //BUILD QUERY
+    // 1A) Filtering
+    const queryObj = { ...req.query }
+    
+    const excludedFields = ['page', 'sort', 'limit', 'fields']
+    excludedFields.forEach(el => delete queryObj[el])
+
+    //1B) Advanced filtering gte | gt | lte | lt
+    let queryString = JSON.stringify(queryObj)
+    queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`)    
+    const formateQueries = JSON.parse(queryString)
+
+
+    if(queryObj?.name) formateQueries.name = {$regex : queryObj.name, $options: 'i'}
+    if(queryObj?.searchPhoneEmail) {
+        formateQueries.$or = [
+            { mobile:  { $regex: '.*' + queryObj.searchPhoneEmail + '.*',$options: 'i' } },
+            { email: { $regex: '.*' + queryObj.searchPhoneEmail + '.*',$options: 'i' } }
+        ]
+        delete formateQueries.searchPhoneEmail
+    }
+    
+    let queryCommand = User.find(formateQueries).select('-refreshToken -password')
+
+    // 2) Sorting
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ')
+        queryCommand = queryCommand.sort(sortBy)
+    } 
+
+
+    //fields 
+    if (req.query.fields) {
+        const fieldsBy = req.query.fields.split(',').join(' ')
+        queryCommand =  queryCommand.select(fieldsBy)
+    }
+
+
+    const page = +req.query.page || 1
+    const limit = +req.query.limit || process.env.LIMIT_PRODUCT
+    const skip = (page-1)*limit
+    queryCommand.limit(limit).skip(skip)
+
+    queryCommand.exec(async (err,response) =>{
+        if(err) throw new Error(err.message)
+        const counts = await User.find(formateQueries).countDocuments()
+        return res.status(200).json({
+            success: response ? true : false,
+            counts,
+            users: response ? response : 'Cannot get users',  
+        })
     })
+    // response = await User.find().select('-refreshToken -password -role')
+    //return res.status(200).json({
+        //success: response ? true : false,
+       // users: response
+    //})
 })
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -220,7 +272,7 @@ const updateUserByAdmin = asyncHandler(async (req, res) => {
     // 
     const { uid } = req.params
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
-    const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select('-password -role -refreshToken')
+    const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select('-password -refreshToken')
     return res.status(200).json({
         success: response ? true : false,
         updatedUser: response ? response : 'Some thing went wrong'
@@ -272,6 +324,8 @@ const updateUserCart = asyncHandler(async (req, res) => {
         })
     }
 })
+
+
 module.exports = {
     register,
     login,
@@ -287,5 +341,5 @@ module.exports = {
     updateUserAddress,
     updateUserCart,
     registerEmail,
-    finalRegister
+    finalRegister,
 }

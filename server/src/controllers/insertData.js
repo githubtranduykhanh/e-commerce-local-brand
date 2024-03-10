@@ -2,8 +2,11 @@ const asyncHandler = require('express-async-handler')
 const slugify = require('slugify')
 const Product = require('../models/product')
 const ProductCategory = require('../models/productCategory')
+const User = require('../models/user')
+const Role = require('../models/role')
 const data = require('../../../data/ecommerce2.json')
 const dataCategory = require('../../../data/cate_brand')
+const { users, roles } = require('../ultils/constant')
 
 
 const fnProduct = async (product) => {
@@ -50,7 +53,27 @@ const insertCategory = asyncHandler(async (req, res) => {
     return res.json('ok')
 })
 
+
+const createUsers = asyncHandler(async (req, res) => {
+    const response = await User.create(users)
+    return res.status(200).json({
+        success: response ? true : false,
+        users: response ? response : 'Some thing went wrong'
+    })
+})
+
+
+const createRoles = asyncHandler(async (req, res) => {
+    const response = await Role.create(roles)
+    return res.status(200).json({
+        success: response ? true : false,
+        roles: response ? response : 'Some thing went wrong'
+    })
+})
+
 module.exports = {
     insertProduct,
-    insertCategory
+    insertCategory,
+    createUsers,
+    createRoles
 }
