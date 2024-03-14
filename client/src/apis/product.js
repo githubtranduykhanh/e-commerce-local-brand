@@ -17,3 +17,16 @@ export const apiPostRatings = (data) => axios({
     method:'post',
     data
 })
+
+
+export const apiPostCreateProduct = (data) => axios({
+    url:`/product/`,
+    method:'post',
+    data
+})
+
+
+export const apiDeleteProduct = (pid) => axios({
+    url:`/product/${pid}`,
+    method:'delete',
+})

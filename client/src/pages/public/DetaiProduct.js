@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import { formatPrice, renderStarFromNumber } from "../../ultils/helpers";
 import ReactImageMagnify from 'react-image-magnify';
 import { productExtraInfoItem } from "../../ultils/contants";
+import DOMPurify from 'dompurify';
 const settings = {
     dots: false,
     infinite: false,
@@ -83,9 +84,13 @@ const DetaiProduct = () => {
                     <span className="font-bold text-2xl text-[#333] tracking-[2px] block mb-[20px]">{formatPrice(detail?.price)}</span>
                     <span className='flex h-2'>{renderStarFromNumber(detail?.totalRatings)}</span>
                     <ul className="mb-[10px] mt-[20px] text-[#505050] list-square ml-[15px]">
-                    {detail?.description?.length > 0 && detail?.description?.map(el => (
+                    
+                    
+                    {detail?.description?.length > 1 && detail?.description?.map(el => (
                         <li className="text-sm mb-[4px]" key={`ModalDetail-description-${el}`}>{el}</li>
                     ))}
+                    {detail?.description?.length === 1 && <div className="text-sm" dangerouslySetInnerHTML={{__html:DOMPurify.sanitize(detail?.description[0])}}>
+                    </div>}
                     </ul>  
                     <div className="flex gap-3 items-center mt-4">
                         <span>Quantity</span>

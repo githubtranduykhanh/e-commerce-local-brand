@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import logo from '../../assets/logo.png'
 import { adminSidebar } from '../../ultils/contants'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 import {FaSortDown} from 'react-icons/fa'
+import path from '../../ultils/path'
 
 const activedStyle = 'px-4 py-2 flex items-center gap-2 bg-main  text-white  rounded-md mb-2'
 const notActivedStyle = 'px-4 py-2 flex items-center gap-2 hover:bg-main hover:text-white rounded-md mb-2'
@@ -16,7 +17,7 @@ const AdminSidebar = () => {
   return (
     <div className='py-4 h-full border-r'>
       <div className='flex flex-col items-center gap-2 '>
-        <img src={logo} alt='AdminSidebar-logo' className='object-contain'/>
+        <Link to={`/${path.HOME}`}><img src={logo} alt='AdminSidebar-logo' className='object-contain'/></Link>
         <small>Admin Workspage</small>
       </div>
       <div className='mx-5 mt-2'>

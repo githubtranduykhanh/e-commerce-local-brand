@@ -1,6 +1,6 @@
 import React,{memo} from 'react'
 
-const SelectForm = ({className,lable, register, id ,listOption}) => {
+const SelectForm = ({className,lable, register, id ,listOption  = []}) => {
   return (
     <div className='w-full'>
         {lable && <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={id}>{lable}</label>}

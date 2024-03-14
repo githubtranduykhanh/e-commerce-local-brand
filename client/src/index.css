@@ -410,3 +410,8 @@
   font-size: 14px;
   color: #1a1b18bf;
 }
+
+
+code {
+  white-space: initial;
+}

@@ -5,7 +5,7 @@ import { closeModalRedux } from "../../redux/features/app/appSlice";
 const {IoMdClose} = icons
 const ModalRedux = ({children}) => {
     const dispatch = useDispatch()
-    return ( <div className="fixed flex inset-0 bg-[#ffffff90]">
+    return ( <div className="fixed z-[1000] flex inset-0 bg-[#ffffff90]">
         <IoMdClose color='#ee3131' size={26} className="close hover:animate-rotate-center" onClick={()=> dispatch(closeModalRedux())}></IoMdClose>
         <div className="m-auto">
             {children}

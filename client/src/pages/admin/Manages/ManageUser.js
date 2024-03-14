@@ -75,7 +75,7 @@ function ManageUser() {
   return (
     <div>
       <h1 className='h-[65px]   flex justify-between items-center text-xl font-bold px-4 border-b'>
-        <span>ManageUser</span>
+        <span>Manage User</span>
       </h1>
       <div>
         <div className='mr-4 my-2 text-end'>

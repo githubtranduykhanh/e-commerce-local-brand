@@ -6,7 +6,7 @@ const Pagination = ({totalCount,onClickItem,currentPage = 1}) => {
   const pagination = usePagination(totalCount,currentPage)
   return (
     <div className='flex items-center justify-between'>
-      <span>{`Show products ${currentPage*10 - 9} - ${(process.env.REACT_APP_PRODUCT_LIMIT || 10 * currentPage) > totalCount ? totalCount : (process.env.REACT_APP_PRODUCT_LIMIT || 10 * currentPage)} of ${totalCount}`}</span>
+      <span>{`Show products ${(process.env.REACT_APP_PRODUCT_LIMIT * currentPage || 10 * currentPage) - 9} - ${(process.env.REACT_APP_PRODUCT_LIMIT * currentPage || 10 * currentPage) > totalCount ? totalCount : (process.env.REACT_APP_PRODUCT_LIMIT * currentPage || 10 * currentPage)} of ${totalCount}`}</span>
       <div className='flex'>
         {pagination?.map((el,index )=> (
           <PagiItem onClickItem={onClickItem}  currentPage={currentPage}  key={`PagiItem-Pagination${index}`}>
