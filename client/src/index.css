@@ -103,7 +103,7 @@
 }
 
 .modal-bg{
-    z-index: 900;
+    z-index: 2000;
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -336,11 +336,19 @@
   background-color: #F7DF72;
 }
 .button.edit:hover::before{
-  transform: scaleX(1.6) skewX(35deg);
+  transform: scaleX(2.2) skewX(35deg);
 }
 
 .button.delete:hover::before{
-  transform: scaleX(1.6) skewX(35deg);
+  transform: scaleX(2.2) skewX(35deg);
+}
+
+
+.button.varriant::before{
+  background-color: #31cbee;
+}
+.button.varriant:hover::before{
+  transform: scaleX(2.2) skewX(35deg);
 }
 
 

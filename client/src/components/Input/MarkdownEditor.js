@@ -1,7 +1,7 @@
 import React, { useRef,memo } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-const MarkdownEditor = ({lable,changeValue,value = '',name,invalidFields, setInvalidFields}) => {
+const MarkdownEditor = ({lable,height=500,changeValue,value = '',name,invalidFields, setInvalidFields}) => {
   return (
     <div>
       {lable && <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`MarkdownEditor-${name}`}>{lable}</label>}  
@@ -11,7 +11,7 @@ const MarkdownEditor = ({lable,changeValue,value = '',name,invalidFields, setInv
             apiKey={process.env.REACT_APP_MCETINY || 'shdluk044hiro83qjkycgwyvn3uzi71h2nfgt5ltag50bekj'}
             initialValue={value}
             init={{
-            height: 500,
+            height: height,
             menubar: true,
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',

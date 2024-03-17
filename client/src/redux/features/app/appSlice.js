@@ -12,7 +12,7 @@ export const appSlice = createSlice({
     isModalDetail:false,
     detail:{},
     isModalRedux:false,
-    modalReduxChildren:null
+    modalReduxChildren:null,
   },
   reducers: {
       showModalRedux: (state,action) => {

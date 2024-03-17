@@ -45,7 +45,7 @@ const CreateProducts = () => {
         continue
       }
       if(i[0] == 'brand'){
-        formData.append('title',finalPayload?.brand?.toUpperCase())
+        formData.append('brand',finalPayload?.brand?.toUpperCase())
         continue
       }
       formData.append(i[0],i[1])

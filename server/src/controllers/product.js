@@ -1,6 +1,7 @@
 const Product = require('../models/product')
 const asyncHandler = require('express-async-handler')
 const slugify = require('slugify')
+const makeSKU = require('uniqid')
 
 const createProduct = asyncHandler(async (req, res) => {
     const {title, price, description, brand, category, color} = req.body
@@ -99,11 +100,31 @@ const getProducts = asyncHandler(async (req, res) => {
 })
 const updateProduct = asyncHandler(async (req, res) => {
     const { pid } = req.params
-    if (req.body && req.body.title) req.body.slug = slugify(req.body.title)
+    const files = req.files
+    const {title, price, description, brand, category, color} = req.body
+    if(files?.thumb) req.body.thumb = files?.thumb[0]?.path
+    if(files?.images) req.body.images = files?.images?.map(el => el?.path)
+    if (!title || !price || !description || !brand || !category || !color) throw new Error('Missing inputs')
+    req.body.slug = slugify(req.body.title)
     const updatedProduct = await Product.findByIdAndUpdate(pid, req.body, { new: true })
     return res.status(200).json({
         success: updatedProduct ? true : false,
-        updatedProduct: updatedProduct ? updatedProduct : 'Cannot update product'
+        mes: updatedProduct ? 'Update product success' : 'Cannot update product'
+    })
+})
+const addVarriantProduct = asyncHandler(async (req, res) => {
+    const { pid } = req.params
+    const files = req.files
+    const {title, price, color} = req.body
+    if(files?.thumb) req.body.thumb = files?.thumb[0]?.path
+    if(files?.images) req.body.images = files?.images?.map(el => el?.path)
+    if (!title || !price || !color) throw new Error('Missing inputs')
+    req.body.slug = slugify(req.body.title)
+    req.body.sku = makeSKU().toUpperCase()
+    const updatedProduct = await Product.findByIdAndUpdate(pid, {$push: {varriants:req.body}}, { new: true })
+    return res.status(200).json({
+        success: updatedProduct ? true : false,
+        mes: updatedProduct ? 'Add new varriant product success' : 'Cannot update product'
     })
 })
 const deleteProduct = asyncHandler(async (req, res) => {
@@ -171,4 +192,5 @@ module.exports = {
     deleteProduct,
     ratings,
     updateImage,
+    addVarriantProduct,
 }

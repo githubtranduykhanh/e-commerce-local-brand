@@ -1,8 +1,7 @@
 import { memo } from "react";
 const Loading = () => {
     return (  
-        
-        <div className="modal-bg">
+        <div className="fixed inset-0 z-[2000] bg-[rgba(255,255,255,0.7)]">
             <div className="center-of-screen">
             <div className="jelly-triangle">
                 <div className="jelly-triangle__dot"></div>

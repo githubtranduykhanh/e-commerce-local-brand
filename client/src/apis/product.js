@@ -30,3 +30,16 @@ export const apiDeleteProduct = (pid) => axios({
     url:`/product/${pid}`,
     method:'delete',
 })
+
+
+export const apiPutUpdateProduct = (data,pid) => axios({
+    url:`/product/${pid}`,
+    method:'put',
+    data
+})
+
+export const apiPutVarriantProduct = (data,pid) => axios({
+    url:`/product/varriant/${pid}`,
+    method:'put',
+    data
+})

@@ -4,8 +4,8 @@ const {BsShieldShaded,FaTruck,FaGift,FaReply,FaTty,MdSpaceDashboard,MdGroup,FaPr
 export const navigation = [
     {
         id:1,
-        value:'PRODUCTS',
-        path:`/${path.PRODUCTS}`
+        value:'COLLECTIONS',
+        path:`/${path.COLLECTIONS}`
     },
     {
         id:2,

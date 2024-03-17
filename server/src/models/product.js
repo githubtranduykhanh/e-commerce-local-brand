@@ -62,6 +62,19 @@ var productSchema = new mongoose.Schema({
             variants: {type :Array}
         }
     ],
+    varriants: [
+        {
+            title:String,
+            color:String,
+            price:{type:Number,default:0},
+            quantity:{type:Number,default:0},
+            thumb:String,
+            images:Array,
+            sku:String,
+            slug:{type: String ,lowercase: true},
+            sold:{type:Number,default:0}
+        }
+    ],
     totalRatings: {
         type: Number,
         default: 0

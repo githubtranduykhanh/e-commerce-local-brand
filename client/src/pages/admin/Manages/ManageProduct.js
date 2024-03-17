@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { apiDeleteProduct, apiGetProduct } from '../../../apis';
 import { formatPrice } from '../../../ultils/helpers';
-import { Pagination } from '../../../components';
+import { Pagination,UpdatePruduct, VarriantProduct } from '../../../components';
 import { useDebounce } from '../../../hooks';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { showModalRedux } from '../../../redux/features/app/appSlice';
+import icons from '../../../ultils/icons';
+
+
+const {BiCustomize,FaRegEdit,MdOutlineDeleteForever} = icons
 
 const ManageProduct = () => {
+  const dispatch = useDispatch()
   const [inputSearch,setInputSearch] = useState('')
   const [params, setParams] = useState({sort:'-createdAt'});
   const [products,setProducts] = useState(null)
@@ -55,7 +62,12 @@ const ManageProduct = () => {
       }
     });
   } 
-
+  const handleEdit = (item) => {
+    dispatch(showModalRedux({modalReduxChildren:<UpdatePruduct product={item} setUpdate={setParams}/>}))
+  }
+  const handleVarriant = (item) => {
+    dispatch(showModalRedux({modalReduxChildren:<VarriantProduct product={item} setUpdate={setParams}/>}))
+  }
   useEffect(()=>{
     fetchUsers(params)
   },[])
@@ -69,7 +81,6 @@ const ManageProduct = () => {
     if(params?.page && inputSearch !== '') fetchUsers({...params,search:inputSearch})
     else fetchUsers(params)
   },[params])
-  console.log('products: ',products)
   return (
     <div>
        <h1 className='h-[65px]   flex justify-between items-center text-xl font-bold px-4 border-b'>
@@ -88,7 +99,7 @@ const ManageProduct = () => {
               <tr>
                 <th className='px-4 py-3 w-[20px]'>#</th>
                 <th className='px-4 py-3'>Thumb</th>
-                <th className='px-4 py-3 w-[200px]'>Title</th>
+                <th className='px-4 py-3 w-[120px]'>Title</th>
                 <th className='px-4 py-3'>Brand</th>
                 <th className='px-4 py-3'>Category</th>
                 <th className='px-4 py-3'>Price</th>
@@ -96,6 +107,7 @@ const ManageProduct = () => {
                 <th className='px-4 py-3 text-center'>Sold</th>
                 <th className='px-4 py-3 text-center'>Color</th>
                 <th className='px-4 py-3 text-center'>Ratings</th>
+                <th className='px-4 py-3 text-center'>Varriant</th>
                 <th className='px-4 py-3 text-center'>CreatedAt</th>
                 <th className='px-4 py-3 text-center w-[200px]'>Actions</th>
               </tr>
@@ -115,14 +127,18 @@ const ManageProduct = () => {
                     <td className='px-4 py-2 text-center'>{el?.sold}</td>
                     <td className='px-4 py-2 text-center'>{el?.color}</td>
                     <td className='px-4 py-2 text-center'>{el?.totalRatings}</td>
+                    <td className='px-4 py-2 text-center'>{el?.varriants?.length || 0}</td>
                     <td className='px-4 py-2 text-center'>{moment(el?.createdAt).format('DD/MM/YYYY')}</td>
                     <td className='px-4 py-2 '>
-                      <div className='flex justify-between items-center'>
-                        <button  className='button edit z-50 p-2 border rounded-md'>
-                          Edit
+                      <div className='flex justify-around items-center'>
+                        <button onClick={() => handleEdit(el)}  className='button edit z-50 p-2 border rounded-md'>
+                          <FaRegEdit size={16}/>
                         </button>
                         <button onClick={() => handleDelete(el?._id)}  className='button delete z-50 p-2 border rounded-md'>
-                          Delete
+                          <MdOutlineDeleteForever size={16}/>
+                        </button>
+                        <button onClick={() => handleVarriant(el)} className='button varriant z-50 p-2 border rounded-md'>
+                          <BiCustomize size={16}/>
                         </button>
                       </div>
                     </td>
