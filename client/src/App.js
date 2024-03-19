@@ -9,7 +9,7 @@ import {CreateProducts} from './pages/admin/Creates'
 import {Dashboard} from './pages/admin/Dashboards'
 import {ManageOrder,ManageProduct,ManageUser} from './pages/admin/Manages'
 import MemberLayout from './pages/member/MemberLayout'
-import {Personal} from './pages/member/Personals'
+import {History, MyCart, Personal, Wishlist} from './pages/member/Personals'
 function App() {
   const {isModalRedux,modalReduxChildren} = useSelector(state => state.app)
   return (
@@ -34,6 +34,9 @@ function App() {
         </Route>
         <Route path={path.MEMBER} element={<MemberLayout/>}>
             <Route path={path.PERSONAL} element={<Personal/>}/> 
+            <Route path={path.MY_CART} element={<MyCart/>}/> 
+            <Route path={path.WISHLIST} element={<Wishlist/>}/> 
+            <Route path={path.HISTORY} element={<History/>}/> 
         </Route>
         <Route path={path.LOGIN} element={<Login/>}/>
         <Route path={path.FINAL_REGISTER} element={<FinalRegister/>}/>

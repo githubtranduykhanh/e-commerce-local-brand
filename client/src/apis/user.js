@@ -54,3 +54,9 @@ export const apiDeleteUser = (uid) => axios({
     url:'/user/'+ uid,
     method:'delete',
 })
+
+export const apiPutCurrent = (data) => axios({
+    url:'/user/current',
+    method:'put',
+    data
+})

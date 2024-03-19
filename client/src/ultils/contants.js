@@ -1,6 +1,6 @@
 import path from "./path"
 import icons from '../ultils/icons'
-const {BsShieldShaded,FaTruck,FaGift,FaReply,FaTty,MdSpaceDashboard,MdGroup,FaProductHunt,RiBillLine} = icons
+const {BsShieldShaded,FaTruck,FaGift,FaReply,FaTty,MdSpaceDashboard,MdGroup,FaProductHunt,RiBillLine,FiShoppingCart,MdOutlineHistory,LuClipboardList} = icons 
 export const navigation = [
     {
         id:1,
@@ -282,6 +282,37 @@ export const adminSidebar = [
         text:'Manage Order',
         path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
         icon: <RiBillLine/>
+    },
+]
+
+export const memberSidebar = [
+    {
+        id:0,
+        type:'SINGLE',
+        text:'Personal',
+        path: `/${path.MEMBER}/${path.PERSONAL}`,
+        icon: <MdSpaceDashboard/>
+    },
+    {
+        id:1,
+        type:'SINGLE',
+        text:'My cart',
+        path: `/${path.MEMBER}/${path.MY_CART}`,
+        icon: <FiShoppingCart/>
+    },
+    {
+        id:2,
+        type:'SINGLE',
+        text:'History',
+        path: `/${path.MEMBER}/${path.HISTORY}`,
+        icon: <MdOutlineHistory/>
+    },
+    {
+        id:3,
+        type:'SINGLE',
+        text:'Wish list',
+        path: `/${path.MEMBER}/${path.WISHLIST}`,
+        icon: <LuClipboardList/>
     },
 ]
 

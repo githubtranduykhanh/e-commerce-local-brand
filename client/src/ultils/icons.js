@@ -1,5 +1,5 @@
 import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail,MdSpaceDashboard,MdGroup,MdOutlineDeleteForever } from "react-icons/md";
+import { MdEmail,MdSpaceDashboard,MdGroup,MdOutlineDeleteForever,MdOutlineHistory } from "react-icons/md";
 import { HiShoppingBag } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
@@ -14,6 +14,8 @@ import { IoMdClose } from "react-icons/io";
 import { BsShieldShaded } from "react-icons/bs";
 import { RiBillLine } from "react-icons/ri";
 import { BiCustomize } from "react-icons/bi";
+import { FiShoppingCart } from "react-icons/fi";
+import { LuClipboardList } from "react-icons/lu";
 const icons = {
     FaPhoneAlt,
     MdEmail,
@@ -45,7 +47,10 @@ const icons = {
     RiBillLine,
     BiCustomize,
     FaRegEdit,
-    MdOutlineDeleteForever
+    MdOutlineDeleteForever,
+    FiShoppingCart,
+    MdOutlineHistory,
+    LuClipboardList
 }
 
 export default icons
